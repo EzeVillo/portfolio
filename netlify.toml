@@ -5,6 +5,34 @@
 [build.environment]
   NODE_VERSION = "24"
 
+# This site owns ezevillo.com. Each project keeps its independent deployment.
+# Keep these rules before any future catch-all; never proxy the rates gateway.
+[[redirects]]
+  from = "/ibit-to-btc/*"
+  to = "https://neon-macaron-a52e5c.netlify.app/ibit-to-btc/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/git-review-workflow/*"
+  to = "https://ezevillo-git-review-workflow.netlify.app/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/truco-a-3"
+  to = "https://ezevillo-truco-a-3.netlify.app/truco-a-3/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/truco-a-3/*"
+  to = "https://ezevillo-truco-a-3.netlify.app/truco-a-3/:splat"
+  status = 200
+  force = true
+
+# Netlify applies these to this site's static files. Proxied responses retain
+# the origin project's headers, including IBIT's CSP and its Cloudflare origin.
 [[headers]]
   for = "/*"
   [headers.values]

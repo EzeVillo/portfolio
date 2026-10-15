@@ -109,21 +109,32 @@ horizontal. `npm run check` pasó.
 
 ### Publicación
 
-`netlify.toml` configura la carpeta `public` y la verificación de la home.
-Esta versión se entrega como preview local; no se modificó el sitio publicado.
+`netlify.toml` configura la carpeta `public`, la verificación de la home y los
+proxies de los proyectos. Este repositorio es la fuente de las reglas del dominio:
 
-Antes de asociar este portfolio a `ezevillo.com`, hay que trasladar las reglas
-actuales de los productos al sitio principal y verificar ambos prefijos.
-IBIT to BTC se sirve actualmente desde el dominio principal; reemplazar su
-deploy directamente con esta home sin conservar ese routing dejaría el
-conversor sin servicio. La configuración nueva todavía no incorpora ese proxy,
-porque no está confirmado el subdominio Netlify del conversor.
+| Ruta pública | Sitio de origen | Ruta en el origen |
+| --- | --- | --- |
+| `/` | Este portfolio | `/` |
+| `/ibit-to-btc/*` | `neon-macaron-a52e5c.netlify.app` | `/ibit-to-btc/:splat` |
+| `/git-review-workflow/*` | `ezevillo-git-review-workflow.netlify.app` | `/:splat` |
+| `/truco-a-3/*` | `ezevillo-truco-a-3.netlify.app` | `/truco-a-3/:splat` |
 
-Enlaces actuales comprobados:
+Los rewrites `200` conservan `ezevillo.com` en el navegador. La Edge Function
+`netlify/edge-functions/project-slash.js`, trasladada desde IBIT, agrega la barra
+final a las entradas de los proyectos y a `/ibit-to-btc/ar` antes del proxy,
+conservando los parámetros y evitando bucles. `npm run check` incluye sus pruebas.
 
-- `https://ezevillo.com/ibit-to-btc/ar/`
-- `https://ezevillo.com/git-review-workflow/`
-- `https://ezevillo.github.io/fe-truco-to-three/`
+Cada origen conserva su build, sus headers y su caché. En IBIT permanecen la
+CSP que permite el gateway de Cloudflare, la función programada de cotizaciones
+y sus credenciales. Las consultas del navegador van directamente a Cloudflare.
+`public/robots.txt` anuncia los sitemaps de la home y del conversor.
+
+**Todavía no publicado:** el 15 de octubre de 2026, la consulta de Netlify
+confirmó que `ezevillo.com` sigue asociado a IBIT y que el portfolio no tiene
+sitio en Netlify. El origen del conversor respondió `200` en ambas versiones;
+el de Git Review respondió `200` y el de Truco respondió `401`.
+Seguir [el orden de migración](docs/netlify-migration.md) antes de desplegar la
+limpieza de IBIT. Estos cambios son locales y no trasladan el dominio.
 
 No renombrar `/git-review-workflow/` a `/git-review/`: la tabla siguiente
 contiene ejemplos de la propuesta original, no URLs nuevas.
@@ -193,13 +204,10 @@ Comprar otro dominio no mejora por sí solo el posicionamiento.
 
 ## Implementación en Netlify
 
-Si los productos ya tienen despliegues separados, la propuesta es mantenerlos
-y usar el sitio principal para servir la home y dirigir cada prefijo al producto
-correspondiente mediante reescrituras o proxy.
-
-Antes de implementarlo, revisar la configuración existente y comprobar que cada
-producto funciona bajo su prefijo: navegación, imágenes, scripts y URLs canónicas.
-La configuración exacta queda pendiente de esa revisión.
+Los productos conservan sus despliegues separados. El sitio principal sirve la
+home y dirige cada prefijo al producto correspondiente mediante las reglas
+de `netlify.toml`. La preparación está implementada; la publicación y el traslado
+del dominio siguen pendientes según [la guía de migración](docs/netlify-migration.md).
 
 ## Referencias
 
