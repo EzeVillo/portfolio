@@ -22,6 +22,23 @@ comprobar páginas, assets, sitemaps, redirecciones con parámetros y las CSP.
 La política de la home se limita a `/` e `/index.html`: una regla `/*` también
 sobrescribe la CSP de los proxies y bloquea Cloudflare y otras conexiones.
 
+## Portada y nombre de IBIT: preparación del 15 de octubre de 2026
+
+El código de IBIT agrega una redirección de `/` al conversor público. Esto
+evita el 404 al abrir su sitio nativo; requiere un nuevo despliegue de IBIT.
+En previews, la redirección conserva el dominio del preview.
+
+Netlify bloquea los despliegues de producción por falta de créditos, pero
+GitHub puede recibir los commits. La versión publicada sigue vigente; revisar
+o reintentar los despliegues cuando vuelva el cupo.
+
+El cambio a `ezevillo-ibit-to-btc` se prepara en la rama
+`codex/rename-ibit-netlify` del portfolio. No integrar esa rama ni renombrar
+el sitio mientras no se pueda desplegar el proxy: el cambio de nombre en
+Netlify modifica su dirección inmediatamente. Al coordinar el cambio, verificar
+ambas versiones y sus assets; si falla el despliegue del portfolio, devolver
+al sitio de IBIT su nombre anterior. `APP_BASE_PATH` conserva `/ibit-to-btc/`.
+
 Durante la migración, algunas respuestas del subdominio nativo conservaron
 cabeceras anteriores al revalidar con `304`. Se purgó la caché y se comprobó
 también la URL inmutable del despliegue. Al cambiar cabeceras, verificar la

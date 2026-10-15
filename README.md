@@ -19,4 +19,6 @@ Ese comando actualiza las reglas de Netlify y las entradas que normalizan su
 barra final. `npm run check` comprueba que ambas sigan sincronizadas.
 
 Netlify publica `public/` y ejecuta `npm run check`. Los pushes a `main`
-disparan un despliegue: si no hay cupo, conservar los cambios localmente.
+disparan un despliegue. Sin créditos de publicación se pueden subir commits a
+GitHub; Netlify mantiene la versión vigente. Comprobar o reintentar el deploy
+cuando vuelva el cupo.
