@@ -14,6 +14,11 @@ npm run check:live   # Verificación del sitio publicado, sin desplegar
 El contenido está en `public/`. El dominio y los proxies se sirven desde Netlify;
 cada proyecto conserva su despliegue independiente.
 
+La portada para compartir la raíz está en `public/assets/og-portfolio.png`
+(1200 × 630), con su fuente editable en `design/og.html`. Para regenerarla,
+capturar ese HTML a 1200 × 630 después de cargar las fuentes locales.
+`public/index.html` define la imagen para Open Graph y Twitter.
+
 Para modificar rutas, editar `config/routes.mjs` y ejecutar `npm run routes`.
 Ese comando actualiza las reglas de Netlify y las entradas que normalizan su
 barra final. `npm run check` comprueba que ambas sigan sincronizadas.

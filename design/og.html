@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es-AR">
+<meta charset="utf-8">
+<title>Portada social · ezevillo</title>
+<!-- Exportar el viewport de 1200 × 630 como public/assets/og-portfolio.png una vez cargadas las fuentes. -->
+<style>
+@font-face{font-family:Space;src:url('../public/assets/space-grotesk-latin.woff2');font-weight:300 700}
+@font-face{font-family:Manrope;src:url('../public/assets/manrope-latin.woff2');font-weight:200 800}
+@font-face{font-family:Mono;src:url('../public/assets/ibm-plex-mono-latin.woff2')}
+*{box-sizing:border-box}html,body{width:1200px;height:630px;margin:0;overflow:hidden}
+body{background:#f5f7fc;color:#192a43;font-family:Manrope,sans-serif;padding:48px 64px}
+header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dce3ef;padding-bottom:26px}
+.brand{font-family:Space,sans-serif;font-size:42px;font-weight:700;letter-spacing:-2.5px}.dot{color:#3155df}
+.role{font-family:Mono,monospace;font-size:17px;color:#56657c}
+main{padding-top:40px;display:flex;align-items:center;justify-content:space-between;gap:38px}
+h1{margin:0;font-family:Space,sans-serif;font-size:82px;font-weight:600;line-height:1.04;letter-spacing:-5px}
+h1 span{color:#3155df}
+.signature{width:285px;border-left:3px solid #3155df;padding:4px 0 4px 25px}
+.name{margin:0;font-family:Space,sans-serif;font-size:31px;font-weight:600;line-height:1.22;letter-spacing:-1px}
+.description{margin:17px 0 0;font-size:18px;line-height:1.6;color:#56657c}
+footer{position:absolute;left:64px;right:64px;bottom:43px;display:flex;align-items:center;justify-content:space-between;font-family:Mono,monospace;font-size:17px;color:#56657c}
+.braces{font-size:25px;color:#3155df;letter-spacing:-3px}
+</style>
+<header><div class="brand">ezevillo<span class="dot">.</span></div><div class="role">Desarrollador de software</div></header>
+<main>
+  <h1>De una idea<br>a algo que<br><span>podés usar.</span></h1>
+  <div class="signature"><p class="name">Ezequiel<br>Villordo</p><p class="description">Herramientas y<br>productos propios.</p></div>
+</main>
+<footer><span>ezevillo.com</span><span class="braces" aria-hidden="true">{ }</span></footer>
+</html>
