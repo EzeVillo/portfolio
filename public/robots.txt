@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ezevillo.com/sitemap.xml
+Sitemap: https://ezevillo.com/ibit-to-btc/sitemap.xml
