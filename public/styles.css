@@ -21,9 +21,14 @@
 .project-featured .project-copy h3{margin:0;font-size:2.9rem}
 .project-title-dot{color:var(--blue)}
 .project-lead{font-family:var(--display);font-size:1.3rem;font-weight:500;line-height:1.45;letter-spacing:-.025em;margin-top:17px;margin-bottom:13px}
-.project-description>p:not(.project-label):not(.project-lead){color:var(--muted);font-size:1rem;line-height:1.85}
+.project-summary{color:var(--ink);font-size:1rem;line-height:1.75}
+.project-detail{margin-top:16px;color:var(--muted);font-size:.9375rem;line-height:1.75}
+.project-detail strong,.project-summary strong{font-weight:600;color:var(--ink)}
+.project[id]{scroll-margin-top:20px}
 .project-links{display:flex;flex-wrap:wrap;align-items:center;gap:14px 23px;margin-top:auto;padding-top:20px;border-top:1px solid var(--line)}
 .project-links>a:first-child{margin-right:auto}
+.project-ibit .project-links>a:first-child{margin-right:0}
+.project-ibit .project-links>a:last-child{margin-left:auto}
 .project-links .button{font-size:.8125rem;min-height:43px;padding:10px 18px}
 .project-links .text-link{font-size:.8125rem}
 .git-visual{display:flex;flex-direction:column;justify-content:center;min-width:0;background:#e5e9f1;padding:30px;border-right:1px solid var(--line)}
@@ -44,10 +49,17 @@ h1,h2,h3{overflow-wrap:anywhere}.header-inner{flex-wrap:wrap}nav{flex-wrap:wrap}
 
 
 
-.project-detail{margin-top:14px}.project-detail strong{font-weight:600;color:var(--ink)}
-.project-versions{display:grid;gap:14px;margin:20px 0 0;font-size:.9375rem;line-height:1.75}
-.project-versions dt{font-weight:700;color:var(--ink)}
-.project-versions dd{margin:2px 0 0;color:var(--muted)}
+.note-example{min-height:36px;margin-top:10px;color:var(--blue);font-size:.8125rem}
+
+@media(max-width:620px){
+  .hero{gap:28px;padding-bottom:40px}
+  .builder-note{width:100%;max-width:none;margin:0;transform:none;box-shadow:none;border-left:3px solid var(--blue);border-radius:10px}
+  .builder-note .note-topbar,.builder-note .file-path,.builder-note .note-heading,.builder-note .note-rule,.builder-note .note-fields,.builder-note .note-bottom{display:none}
+  .note-content{padding:17px 20px}
+  .note-now{margin:0;padding:0;background:none}
+  .note-now p{font-size:.875rem;line-height:1.7}
+  .note-example{min-height:44px;margin-top:6px}
+}
 
 
 

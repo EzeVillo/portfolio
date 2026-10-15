@@ -107,6 +107,22 @@ Se verificó en navegador a 1440, 801, 800, 390 y 320 px: imágenes cargadas,
 texto alineado arriba, enlaces al pie dentro de las tarjetas y sin desborde
 horizontal. `npm run check` pasó.
 
+### Ajuste de lectura y foco en software
+
+El ajuste del 15 de octubre de 2026 presenta cada proyecto con una descripción
+breve y párrafos que integran el desarrollo y los detalles técnicos útiles,
+sin subtítulos repetidos. Las etiquetas destacan el trabajo
+de software: herramientas de desarrollo, datos, tiempo real, automatización
+e integración de sistemas. El nodo conserva su lugar y se presenta desde la
+app Android, la API local, el servicio en C y la optimización de memoria.
+
+En móvil, hasta 620 px, la tarjeta de presentación se reduce a «En lo que estoy»
+y un enlace a Git Review como ejemplo de IA aplicada. La tarjeta del proyecto
+explica el recorrido de lectura que puede aportar un agente. A 390 px, la
+sección de proyectos comienza aproximadamente a los 800 px, frente a los
+1.280 px anteriores. Se mantiene la composición de escritorio y el orden
+de los cinco proyectos.
+
 ### Publicación
 
 `netlify.toml` configura la carpeta `public`, la verificación de la home y los

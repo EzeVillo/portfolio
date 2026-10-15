@@ -2,6 +2,7 @@ import { readFile, access } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 
 const root = fileURLToPath(new URL('../public/', import.meta.url));
 const html = await readFile(resolve(root, 'index.html'), 'utf8');
@@ -23,5 +24,8 @@ const assets = new Set([
 for (const asset of assets) await access(resolve(root, '.' + asset));
 const jsonLd = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
 assert.equal(JSON.parse(jsonLd)['@type'], 'ProfilePage', 'Metadatos de perfil inválidos');
+const netlifyConfig = await readFile(new URL('../netlify.toml', import.meta.url), 'utf8');
+const jsonLdHash = createHash('sha256').update(jsonLd.replaceAll('\r\n', '\n')).digest('base64');
+assert.ok(netlifyConfig.includes(`'sha256-${jsonLdHash}'`), 'Actualizar el hash CSP del JSON-LD en netlify.toml');
 assert.ok(html.includes('lang="es-AR"'), 'Idioma de la página no definido');
 console.log(`OK: ${assets.size} assets locales, ${ids.length} IDs, anclas, referencias ARIA y metadatos.`);

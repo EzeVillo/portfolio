@@ -56,7 +56,7 @@
               <div><dt>foco</dt><dd>Herramientas y productos propios</dd></div>
               <div><dt>motor</dt><dd>Curiosidad y problemas reales</dd></div>
             </dl>
-            <div class="note-now"><span class="mono-label">EN LO QUE ESTOY</span><p>Aprendiendo, aplicando y enseñando cómo usar IA.</p></div>
+            <div class="note-now"><span class="mono-label">EN LO QUE ESTOY</span><p>Aprendiendo, aplicando y enseñando cómo usar IA.</p><a class="text-link note-example" href="#git-review">IA aplicada en Git Review <span aria-hidden="true">→</span></a></div>
           </div>
           <div class="note-bottom"><span>entender → construir → mejorar</span><span aria-hidden="true">_</span></div>
         </aside>
@@ -65,15 +65,15 @@
       <section class="projects-section container" id="proyectos" aria-labelledby="projects-title">
         <div class="section-heading"><div><p class="eyebrow">COSAS QUE CONSTRUYO</p><h2 id="projects-title">Del “estaría bueno”<br>al “ya existe”.</h2></div><p>Problemas concretos.<br> Herramientas para resolverlos.</p></div>
 
-        <article class="project project-featured">
+        <article class="project project-featured" id="git-review" aria-labelledby="git-review-title">
           <figure class="project-visual git-visual"><img src="/assets/git-review-vscode.png" width="1920" height="1080" alt="Git Review en VS Code: recorrido del cambio junto al código editable" loading="lazy"><figcaption>Un recorrido por el cambio, dentro de tu editor.</figcaption></figure>
           <div class="project-copy">
             <div class="project-description">
               <div class="project-kind"><span class="project-label">Developer tooling</span></div>
-              <h3>Git Review<span class="project-title-dot">.</span></h3>
+              <h3 id="git-review-title">Git Review<span class="project-title-dot">.</span></h3>
               <p class="project-lead">Revisá un PR<br>editando y ejecutando el código.</p>
-              <p>Un workflow para leer el diff, editar el código y correr los tests dentro de tu editor.</p>
-              <p class="project-detail">El PR queda como un <strong>diff editable</strong> y tus correcciones se extraen a una <strong>rama separada</strong>. Los cambios escritos con IA pueden incluir un recorrido que explica qué leer y por qué.</p>
+              <p class="project-detail">Un workflow de revisión dentro del editor, con <strong>diff editable</strong> y ejecución de tests. Las correcciones se extraen a una <strong>rama separada</strong>.</p>
+              <p class="project-detail">Un agente de IA puede aportar un <strong>recorrido de lectura</strong> que explica qué revisar y por qué.</p>
             </div>
             <div class="project-links"><a class="button button-dark" href="https://ezevillo.com/git-review-workflow/" target="_blank" rel="noopener noreferrer">Conocé Git Review</a><a class="text-link" href="https://github.com/EzeVillo/git-review-workflow" target="_blank" rel="noopener noreferrer">Código fuente</a></div>
           </div>
@@ -94,14 +94,11 @@
             </figure>
             <div class="project-copy">
               <div class="project-description">
-                <p class="project-label">Bitcoin · Herramienta web</p>
+                <p class="project-label">Herramienta web · Datos</p>
                 <h3 id="ibit-title">IBIT to BTC</h3>
-                <p>Un conversor para entender cuánto Bitcoin representan tus cuotas de IBIT o CEDEAR y calcular el costo equivalente por BTC desde tu precio promedio de compra.</p>
-                <p class="project-detail">En ambas versiones, los cálculos usan <strong>precisión decimal</strong>; cada dato muestra su fuente y fecha. Si una cotización no se actualiza, conserva su fecha original y avisa su antigüedad.</p>
-                <dl class="project-versions">
-                  <div><dt>Argentina</dt><dd>En español, con CEDEAR, cuotas de IBIT, BTC, satoshis, ARS y USD MEP/CCL.</dd></div>
-                  <div><dt>Internacional</dt><dd>En inglés, con cuotas de IBIT, BTC, satoshis y USD.</dd></div>
-                </dl>
+                <p class="project-summary">Un conversor de IBIT y CEDEAR a BTC y satoshis, con cálculo del costo equivalente por BTC de tu compra.</p>
+                <p class="project-detail">Tiene dos versiones: <strong>Argentina, en español</strong>, con ARS y USD MEP/CCL; <strong>internacional, en inglés</strong>, con IBIT y USD.</p>
+                <p class="project-detail">Los cálculos usan <strong>precisión decimal</strong>. Cada cotización indica su fuente y fecha, y avisa si quedó desactualizada.</p>
               </div>
               <div class="project-links"><a class="text-link strong" href="https://ezevillo.com/ibit-to-btc/ar/" target="_blank" rel="noopener noreferrer">Versión argentina</a><a class="text-link strong" href="https://ezevillo.com/ibit-to-btc/" hreflang="en" target="_blank" rel="noopener noreferrer">Internacional (EN)</a><a class="text-link" href="https://github.com/EzeVillo/ibit-to-btc" target="_blank" rel="noopener noreferrer">GitHub</a></div>
             </div>
@@ -124,11 +121,10 @@
               <div class="project-description">
                 <p class="project-label">Juego · Sistemas en tiempo real</p>
                 <h3 id="truco-title">Truco a 3 puntos</h3>
-                <p>Una variante propia del truco argentino, con una web para jugar online, invitar amigos o enfrentarte a bots.</p>
-                <p class="project-detail">El <strong>frontend en Angular</strong> lleva la mesa a móvil y escritorio, con partida rápida, modo campaña, perfiles y logros.</p>
-                <p class="project-detail">Las reglas del juego viven en un <strong>dominio separado de la infraestructura</strong>. Spring Boot, WebSocket y PostgreSQL permiten gestionar partidas y torneos, comunicar los cambios y persistir el estado.</p>
+                <p class="project-summary">Una variante propia del truco argentino para jugar online, con amigos o contra bots.</p>
+                <p class="project-detail">El frontend en <strong>Angular</strong> lleva la mesa a móvil y escritorio. El backend usa <strong>Spring Boot, WebSocket y PostgreSQL</strong>, con las reglas del juego separadas de la infraestructura y estado persistente para partidas y torneos.</p>
               </div>
-              <div class="project-links"><a class="text-link strong" href="https://ezevillo.github.io/fe-truco-to-three/" target="_blank" rel="noopener noreferrer">Jugá al Truco</a><a class="text-link" href="https://github.com/EzeVillo/fe-truco-to-three" target="_blank" rel="noopener noreferrer">Frontend</a><a class="text-link" href="https://github.com/EzeVillo/api-truco-to-three" target="_blank" rel="noopener noreferrer">Backend</a></div>
+              <div class="project-links"><a class="text-link strong" href="https://ezevillo.com/truco-a-3/" target="_blank" rel="noopener noreferrer">Jugá al Truco</a><a class="text-link" href="https://github.com/EzeVillo/fe-truco-to-three" target="_blank" rel="noopener noreferrer">Frontend</a><a class="text-link" href="https://github.com/EzeVillo/api-truco-to-three" target="_blank" rel="noopener noreferrer">Backend</a></div>
             </div>
           </article>
 
@@ -147,10 +143,10 @@
             </figure>
             <div class="project-copy">
               <div class="project-description">
-                <p class="project-label">Bitcoin · Automatización</p>
+                <p class="project-label">Automatización · Integración de APIs</p>
                 <h3 id="bot-title">BTC Unspendable Bot</h3>
-                <p>Un bot para X (Twitter) que publica cada día el total de BTC que Bitcoin Core clasifica como imposibles de gastar y su variación desde el registro anterior.</p>
-                <p class="project-detail">Calcula los cambios con <strong>precisión en satoshis</strong> y guarda el registro en Git solo cuando X confirma la publicación. Se ejecuta con <strong>Node.js y GitHub Actions</strong>, con autenticación OAuth 2.0 y rotación de credenciales.</p>
+                <p class="project-summary">Un bot que publica a diario en X el total de BTC que Bitcoin Core clasifica como imposibles de gastar y su variación.</p>
+                <p class="project-detail">Se ejecuta con <strong>Node.js y GitHub Actions</strong>. Calcula los cambios en <strong>satoshis</strong> y guarda el registro en Git <strong>solo cuando X confirma la publicación</strong>.</p>
               </div>
               <div class="project-links"><a class="text-link strong" href="https://x.com/UnspendableBTC" target="_blank" rel="noopener noreferrer">Explorá el bot</a><a class="text-link" href="https://github.com/EzeVillo/btc-unspendable-bot" target="_blank" rel="noopener noreferrer">GitHub</a></div>
             </div>
@@ -159,7 +155,7 @@
           <article class="project project-node" id="lg-v480-bitcoin-node" aria-labelledby="node-title">
             <figure class="node-visual">
               <figcaption class="node-visual-heading">
-                <span class="node-visual-label">HARDWARE RECUPERADO</span>
+                <span class="node-visual-label">SOFTWARE EN HARDWARE LIMITADO</span>
                 <span class="node-visual-headline">Una vieja tablet.<br><span>Un nodo propio.</span></span>
               </figcaption>
               <img class="node-panel" src="/assets/lg-v480-bitcoin-node.png" width="1280" height="800" alt="Panel Android en la LG V480: nodo Bitcoin activo, sincronización al 100 %, Tor activo e indicadores de pares, memoria, microSD y batería" loading="lazy">
@@ -167,9 +163,9 @@
             </figure>
             <div class="project-copy">
               <div class="project-description">
-                <p class="project-label">Bitcoin · Integración de sistemas</p>
+                <p class="project-label">Android · Integración de sistemas</p>
                 <h3 id="node-title">De tablet a nodo Bitcoin</h3>
-                <p>Reutilicé una tablet <strong>LG G Pad 8.0 V480 de 2014</strong>, con <strong>1 GB de RAM y una microSD de 32 GB</strong>, para validar Bitcoin con un nodo podado y un panel Android propio.</p>
+                <p class="project-summary">Reutilicé una tablet <strong>LG G Pad 8.0 V480 de 2014</strong>, con <strong>1 GB de RAM y una microSD de 32 GB</strong>, para validar Bitcoin con un nodo podado y un panel Android propio.</p>
                 <p class="project-detail">Integré <strong>LineageOS 14.1, Termux, Bitcoin Core y Tor</strong> con arranque automático y recuperación de Wi-Fi. Una API local conecta el nodo con la app.</p>
                 <p class="project-detail">Para reducir el consumo de memoria, reemplacé la WebView por una <strong>interfaz nativa en Java</strong> y optimicé las consultas. Un servicio en C controla la carga de la batería entre el 50 % y el 70 %.</p>
               </div>

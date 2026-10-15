@@ -1,6 +1,6 @@
 # Fuentes del portfolio
 
-Revisión: 14 de octubre de 2026.
+Revisión: 15 de octubre de 2026.
 
 | Contenido | Fuente |
 | --- | --- |
@@ -13,7 +13,7 @@ Revisión: 14 de octubre de 2026.
 | IBIT to BTC: capturas del conversor y del costo equivalente por BTC | Dos imágenes proporcionadas por el usuario, conservadas completas en public/assets/ibit-conversor.png y public/assets/ibit-costo-btc.png |
 | Truco: dominio separado, Spring Boot, WebSocket, PostgreSQL y torneos | README.md de ../api-truco-to-three y https://github.com/EzeVillo/api-truco-to-three |
 | Truco: frontend Angular para móvil y escritorio, partidas por invitación, partida rápida, campaña, perfiles y logros | README.md, package.json, src/app/app.routes.ts y src/app/features/lobby/pages/lobby-page/lobby-page.component.html de ../fe-truco-to-three; https://github.com/EzeVillo/fe-truco-to-three |
-| Truco: acceso para jugar | URL canónica en src/index.html y .github/workflows/deploy-github-pages.yml de ../fe-truco-to-three: https://ezevillo.github.io/fe-truco-to-three/ |
+| Truco: acceso para jugar | URL proporcionada por el usuario: https://ezevillo.com/truco-a-3/ |
 | Truco: captura de la partida en móvil | Imagen proporcionada por el usuario, conservada completa en public/assets/truco-a-3-puntos.png |
 | BTC Unspendable Bot: datos de Bitcoin Core, publicaciones diarias en X, precisión en satoshis, registros en Git y OAuth 2.0 | README.md, src/run.mjs, src/lib.mjs y .github/workflows/daily.yml de ../btc-unspendable-bot |
 | BTC Unspendable Bot: cuenta pública en X | https://x.com/UnspendableBTC, proporcionada por el usuario |
@@ -22,6 +22,7 @@ Revisión: 14 de octubre de 2026.
 | LG V480: modelo de 2014, 1 GB de RAM, microSD de 32 GB y LineageOS 14.1 | Datos proporcionados por el usuario; capacidad de microSD y versión de LineageOS contrastadas con README.md de ../lg-v480-bitcoin-node. Bitcoin Core se presenta sin fijar versión por indicación del usuario |
 | Posicionamiento como desarrollador de software; experiencia backend y bancaria en «Sobre mí» | Ajuste editorial aprobado por el usuario en esta conversación |
 | Foco actual: aprender, aplicar y enseñar cómo usar IA | Actividad descrita por el usuario y redacción aprobada en esta conversación |
+| Lectura breve de proyectos, foco en software y enlace de IA aplicada a Git Review | Ajuste solicitado por el usuario el 15 de octubre de 2026; capacidades resumidas a partir de las fuentes anteriores. El recorrido generado por un agente está descrito en README.es.md de ../git-review-workflow |
 | Eliminación de «Cómo trabajo» | Ajuste editorial aprobado por el usuario en esta conversación |
 | Redacción sobre motivación y contacto | Propuesta editorial; no es una cita literal del perfil |
 
