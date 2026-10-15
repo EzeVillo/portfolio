@@ -1,6 +1,33 @@
-# Trasladar el dominio de IBIT al portfolio
+# Migración del dominio de IBIT al portfolio
 
-## Estado comprobado el 15 de octubre de 2026
+## Estado actual: publicado el 15 de octubre de 2026
+
+- Repositorio: `https://github.com/EzeVillo/portfolio`, rama `main`.
+- Sitio Netlify: `ezevillo-portfolio` (`9a3f2e9a-f9a5-4dcd-a4cc-50f75ac7d067`).
+- Dominio: `https://ezevillo.com`, con certificado válido para el dominio y
+  `www.ezevillo.com`. HTTP y `www` redirigen al origen canónico.
+- Despliegue automático: webhook de GitHub para cada push y clave de despliegue
+  de solo lectura. El build ejecuta `npm run check` con Node.js 24.
+- La URL `ezevillo-portfolio.netlify.app` redirige al dominio canónico, incluida
+  cualquier ruta y sus parámetros. Las URLs inmutables de despliegue permiten
+  verificar una versión antes de publicarla en el dominio.
+- Las dos versiones de IBIT, Git Review y Truco responden `200` en las rutas
+  originales. Se quitó el login de Netlify que impedía el acceso público a Truco.
+- Se publicó `bdd3da8` en IBIT después de comprobar las rutas bajo el portfolio.
+  Su origen `neon-macaron-a52e5c.netlify.app` y sus variables se conservaron.
+
+Verificación reproducible: `npm run check:live` realiza 47 solicitudes para
+comprobar páginas, assets, sitemaps, redirecciones con parámetros y las CSP.
+`npm run check` también comprueba el hash del JSON-LD autorizado por la CSP.
+La política de la home se limita a `/` e `/index.html`: una regla `/*` también
+sobrescribe la CSP de los proxies y bloquea Cloudflare y otras conexiones.
+
+Durante la migración, algunas respuestas del subdominio nativo conservaron
+cabeceras anteriores al revalidar con `304`. Se purgó la caché y se comprobó
+también la URL inmutable del despliegue. Al cambiar cabeceras, verificar la
+respuesta efectiva en producción, además del estado `ready` de Netlify.
+
+## Estado antes de publicar, comprobado el 15 de octubre de 2026
 
 - `ezevillo.com` está asociado al sitio `neon-macaron-a52e5c`, vinculado a
   `EzeVillo/ibit-to-btc`. Ese despliegue también enruta Git Review y Truco.
@@ -11,8 +38,8 @@
 - Truco responde `401` en `https://ezevillo-truco-a-3.netlify.app/truco-a-3/`.
   Resolver o confirmar ese acceso antes de dar la migración por terminada.
 
-La preparación se limita a archivos y commits locales. No se creó un sitio,
-se cambió el dominio, se modificaron variables ni se ejecutaron despliegues.
+En ese momento la preparación se limitaba a archivos y commits locales;
+el resto de esta guía conserva el procedimiento de migración y recuperación.
 
 ## Responsabilidades
 
@@ -26,7 +53,7 @@ No mover las variables privadas de cotizaciones al portfolio. `SITE_URL` y
 `ALLOWED_ORIGIN` siguen siendo `https://ezevillo.com`, y `APP_BASE_PATH` sigue
 siendo `/ibit-to-btc/`. La API pública permanece en Cloudflare.
 
-## Orden para publicar cuando se autorice
+## Procedimiento de publicación
 
 1. Mantener el despliegue vigente de IBIT mientras posea el dominio. No publicar
    antes la eliminación de sus proxies: dejaría Git Review y Truco sin rutas.

@@ -8,6 +8,12 @@
 # This site owns ezevillo.com. Each project keeps its independent deployment.
 # Keep these rules before any future catch-all; never proxy the rates gateway.
 [[redirects]]
+  from = "https://ezevillo-portfolio.netlify.app/*"
+  to = "https://ezevillo.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/ibit-to-btc/*"
   to = "https://neon-macaron-a52e5c.netlify.app/ibit-to-btc/:splat"
   status = 200

@@ -151,12 +151,18 @@ CSP que permite el gateway de Cloudflare, la función programada de cotizaciones
 y sus credenciales. Las consultas del navegador van directamente a Cloudflare.
 `public/robots.txt` anuncia los sitemaps de la home y del conversor.
 
-**Todavía no publicado:** el 15 de octubre de 2026, la consulta de Netlify
-confirmó que `ezevillo.com` sigue asociado a IBIT y que el portfolio no tiene
-sitio en Netlify. El origen del conversor respondió `200` en ambas versiones;
-el de Git Review respondió `200` y el de Truco respondió `401`.
-Seguir [el orden de migración](docs/netlify-migration.md) antes de desplegar la
-limpieza de IBIT. Estos cambios son locales y no trasladan el dominio.
+**En producción desde el 15 de octubre de 2026:** [ezevillo.com](https://ezevillo.com)
+pertenece al sitio `ezevillo-portfolio` de Netlify, conectado a
+[`EzeVillo/portfolio`](https://github.com/EzeVillo/portfolio), rama `main`.
+Cada push dispara la verificación y el despliegue. La URL nativa del portfolio
+redirige al dominio principal, conservando la ruta y los parámetros.
+`www.ezevillo.com` y HTTP también redirigen a HTTPS sin `www`.
+
+Se verificaron 47 solicitudes sobre el dominio definitivo: home, cuatro páginas
+de proyectos, assets, sitemaps y normalización de rutas. Truco ya es público.
+La limpieza de IBIT (`bdd3da8`) está publicada; el conversor conserva su origen,
+sus variables privadas y la actualización programada de cotizaciones. Ver
+[el registro de migración](docs/netlify-migration.md).
 
 No renombrar `/git-review-workflow/` a `/git-review/`: la tabla siguiente
 contiene ejemplos de la propuesta original, no URLs nuevas.
@@ -228,8 +234,8 @@ Comprar otro dominio no mejora por sí solo el posicionamiento.
 
 Los productos conservan sus despliegues separados. El sitio principal sirve la
 home y dirige cada prefijo al producto correspondiente mediante las reglas
-de `netlify.toml`. La preparación está implementada; la publicación y el traslado
-del dominio siguen pendientes según [la guía de migración](docs/netlify-migration.md).
+de `netlify.toml`. La publicación y el traslado del dominio están realizados
+según [el registro de migración](docs/netlify-migration.md).
 
 ## Referencias
 
