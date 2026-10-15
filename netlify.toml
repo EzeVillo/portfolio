@@ -31,8 +31,8 @@
   status = 200
   force = true
 
-# Netlify applies these to this site's static files. Proxied responses retain
-# the origin project's headers, including IBIT's CSP and its Cloudflare origin.
+# Shared security headers also apply to proxied responses. Keep the portfolio's
+# restrictive CSP scoped to its home so each project retains its own policy.
 [[headers]]
   for = "/*"
   [headers.values]
@@ -40,6 +40,15 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "DENY"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Content-Security-Policy = "default-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self' 'sha256-IO26B9PWQcAF+aNZhGJxvJdVUMsYkSPTj+KLclWfJ7Y='; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
     Content-Security-Policy = "default-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self' 'sha256-IO26B9PWQcAF+aNZhGJxvJdVUMsYkSPTj+KLclWfJ7Y='; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
 
 [[headers]]

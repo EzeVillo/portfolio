@@ -8,6 +8,7 @@
     "dev": "node scripts/serve.mjs",
     "preview": "node scripts/serve.mjs",
     "test": "node --test scripts/*.test.mjs",
+    "check:live": "node scripts/check-live.mjs",
     "check": "node --check scripts/serve.mjs && node scripts/check.mjs && npm test"
   }
 }
