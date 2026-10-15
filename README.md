@@ -24,6 +24,12 @@ Abrir `http://127.0.0.1:4321/`. `npm run check` comprueba la sintaxis del servid
 assets locales, anclas, referencias ARIA y metadatos. Las fuentes son locales;
 sus licencias están en `public/assets/licenses/`.
 
+Para verificar un despliegue completo: `npm run check:live -- https://ezevillo.com`.
+Comprueba la home, los proyectos, sus assets, las redirecciones con parámetros,
+los sitemaps y que los proxies conserven la CSP de cada proyecto. La CSP del
+portfolio se limita a `/` e `/index.html`; aplicarla a `/*` bloquearía las
+conexiones de IBIT a Cloudflare y el funcionamiento de los otros proyectos.
+
 Verificación del ajuste editorial del 14 de octubre de 2026: `npm run check`
 pasó. Se revisó la vista previa en escritorio y móvil a 390 y 320 px, sin
 desborde horizontal. Los enlaces «Proyectos» y «Sobre mí» quedan visibles en
