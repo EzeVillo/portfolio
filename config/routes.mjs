@@ -5,7 +5,7 @@ export const netlifyURL = 'https://ezevillo-portfolio.netlify.app';
 export const projects = [
   {
     path: '/ibit-to-btc/',
-    origin: 'https://neon-macaron-a52e5c.netlify.app/ibit-to-btc/',
+    origin: 'https://ezevillo-ibit-to-btc.netlify.app/ibit-to-btc/',
     pages: ['ar/'],
   },
   {

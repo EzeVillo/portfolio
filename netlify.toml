@@ -17,13 +17,13 @@
 
 [[redirects]]
   from = "/ibit-to-btc"
-  to = "https://neon-macaron-a52e5c.netlify.app/ibit-to-btc/"
+  to = "https://ezevillo-ibit-to-btc.netlify.app/ibit-to-btc/"
   status = 200
   force = true
 
 [[redirects]]
   from = "/ibit-to-btc/*"
-  to = "https://neon-macaron-a52e5c.netlify.app/ibit-to-btc/:splat"
+  to = "https://ezevillo-ibit-to-btc.netlify.app/ibit-to-btc/:splat"
   status = 200
   force = true
 
