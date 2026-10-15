@@ -1,23 +1,19 @@
 import assert from 'node:assert/strict';
+import { projects, siteURL } from '../config/routes.mjs';
 
-const base = new URL(process.argv[2] || 'https://ezevillo.com');
-const origins = {
-  '/ibit-to-btc/': 'https://neon-macaron-a52e5c.netlify.app/ibit-to-btc/',
-  '/ibit-to-btc/ar/': 'https://neon-macaron-a52e5c.netlify.app/ibit-to-btc/ar/',
-  '/git-review-workflow/': 'https://ezevillo-git-review-workflow.netlify.app/',
-  '/truco-a-3/': 'https://ezevillo-truco-a-3.netlify.app/truco-a-3/',
-};
+const base = new URL(process.argv[2] || siteURL);
 let checked = 0;
 async function get(url, options = {}) {
   const response = await fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(20_000), ...options });
   checked++;
   return response;
 }
-async function page(path, marker) {
+async function page(path) {
   const response = await get(new URL(path, base));
   assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
   const html = await response.text();
-  assert.ok(html.includes(marker), `${path}: contenido inesperado`);
+  const title = html.match(/<title>(.*?)<\/title>/s)?.[1];
+  assert.ok(title, `${path}: falta el título de la página`);
   // Follow the HTML base element, including Angular's project subdirectory.
   const assetBase = new URL(html.match(/<base\b[^>]*href="([^"]+)"/)?.[1] || path, base);
   const assets = new Set([...html.matchAll(/\b(?:src|href)="([^"#]+)"/g)]
@@ -31,17 +27,21 @@ async function page(path, marker) {
     await asset.arrayBuffer();
   }));
   console.log(`OK ${path} y ${assets.size} assets`);
-  return response;
+  return { response, title };
 }
 
-const home = await page('/', 'De una idea');
+const { response: home } = await page('/');
 assert.ok(home.headers.get('content-security-policy')?.includes("default-src 'none'"), 'Falta la CSP de la home');
-await Promise.all(Object.entries(origins).map(async ([path, origin]) => {
-  const marker = path.includes('ibit') ? 'IBIT to BTC' : path.includes('truco') ? 'Truco a 3' : 'git review';
-  const [proxied, original] = await Promise.all([page(path, marker), get(origin)]);
+const pages = projects.flatMap(project => ['', ...(project.pages || [])].map(page => ({
+  path: project.path + page,
+  origin: new URL(page, project.origin),
+})));
+await Promise.all(pages.map(async ({ path, origin }) => {
+  const [proxied, original] = await Promise.all([page(path), get(origin)]);
   assert.equal(original.status, 200, `${origin}: origen inaccesible`);
-  assert.equal(proxied.headers.get('content-security-policy'), original.headers.get('content-security-policy'), `${path}: el proxy cambió la CSP del proyecto`);
-  await original.arrayBuffer();
+  assert.equal(proxied.response.headers.get('content-security-policy'), original.headers.get('content-security-policy'), `${path}: el proxy cambió la CSP del proyecto`);
+  const originalHtml = await original.text();
+  assert.equal(proxied.title, originalHtml.match(/<title>(.*?)<\/title>/s)?.[1], `${path}: contenido distinto del origen`);
   const query = '?ref=production-check&lang=es';
   const bare = new URL(path.slice(0, -1) + query, base);
   const redirect = await get(bare);
@@ -49,9 +49,14 @@ await Promise.all(Object.entries(origins).map(async ([path, origin]) => {
   assert.equal(redirect.headers.get('location'), new URL(path + query, base).href, `${bare}: redirección incorrecta`);
   await redirect.arrayBuffer();
 }));
-await Promise.all(['/robots.txt', '/sitemap.xml', '/ibit-to-btc/sitemap.xml'].map(async path => {
-  const response = await get(new URL(path, base));
-  assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
-  assert.ok((await response.text()).includes('https://ezevillo.com/'), `${path}: faltan las URLs públicas`);
+const robots = await get(new URL('/robots.txt', base));
+assert.equal(robots.status, 200, '/robots.txt: no disponible');
+const sitemaps = [...(await robots.text()).matchAll(/^Sitemap:\s*(\S+)/gm)].map(match => new URL(match[1]));
+assert.ok(sitemaps.length > 0, 'robots.txt: falta el sitemap');
+await Promise.all(sitemaps.map(async sitemap => {
+  assert.equal(sitemap.origin, siteURL, 'El sitemap debe pertenecer al sitio público');
+  const response = await get(new URL(sitemap.pathname, base));
+  assert.equal(response.status, 200, `${sitemap.pathname}: HTTP ${response.status}`);
+  assert.ok((await response.text()).includes(`${siteURL}/`), `${sitemap.pathname}: faltan las URLs públicas`);
 }));
 console.log(`OK: ${checked} solicitudes verificadas en ${base.origin}`);

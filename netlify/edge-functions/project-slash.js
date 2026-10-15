@@ -1,6 +1,7 @@
 // Netlify redirect rules match both forms of a trailing slash, which can loop.
 // Inspect the original URL before proxying each project's entry pages.
-const entryPaths = ['/ibit-to-btc', '/ibit-to-btc/ar', '/git-review-workflow', '/truco-a-3'];
+// Entry paths are generated from config/routes.mjs by npm run routes.
+const entryPaths = ["/ibit-to-btc","/ibit-to-btc/ar","/git-review-workflow","/truco-a-3"];
 
 export default function projectSlash(request, context) {
   const url = new URL(request.url);

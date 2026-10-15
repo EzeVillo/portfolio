@@ -7,6 +7,8 @@
 
 # This site owns ezevillo.com. Each project keeps its independent deployment.
 # Keep these rules before any future catch-all; never proxy the rates gateway.
+# BEGIN GENERATED ROUTES
+# Generated from config/routes.mjs by npm run routes.
 [[redirects]]
   from = "https://ezevillo-portfolio.netlify.app/*"
   to = "https://ezevillo.com/:splat"
@@ -14,8 +16,20 @@
   force = true
 
 [[redirects]]
+  from = "/ibit-to-btc"
+  to = "https://neon-macaron-a52e5c.netlify.app/ibit-to-btc/"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/ibit-to-btc/*"
   to = "https://neon-macaron-a52e5c.netlify.app/ibit-to-btc/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/git-review-workflow"
+  to = "https://ezevillo-git-review-workflow.netlify.app/"
   status = 200
   force = true
 
@@ -36,6 +50,7 @@
   to = "https://ezevillo-truco-a-3.netlify.app/truco-a-3/:splat"
   status = 200
   force = true
+# END GENERATED ROUTES
 
 # Shared security headers also apply to proxied responses. Keep the portfolio's
 # restrictive CSP scoped to its home so each project retains its own policy.
