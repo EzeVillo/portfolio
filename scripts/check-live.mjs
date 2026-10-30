@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { projects, siteURL } from '../config/routes.mjs';
 
-const base = new URL(process.argv[2] || siteURL);
+const compareNetlify = process.argv.includes('--compare-netlify');
+const base = new URL(process.argv.slice(2).find(arg => !arg.startsWith('--')) || siteURL);
 let checked = 0;
 async function get(url, options = {}) {
   const response = await fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(20_000), ...options });
@@ -37,11 +38,14 @@ const pages = projects.flatMap(project => ['', ...(project.pages || [])].map(pag
   origin: new URL(page, project.origin),
 })));
 await Promise.all(pages.map(async ({ path, origin }) => {
-  const [proxied, original] = await Promise.all([page(path), get(origin)]);
-  assert.equal(original.status, 200, `${origin}: origen inaccesible`);
-  assert.equal(proxied.response.headers.get('content-security-policy'), original.headers.get('content-security-policy'), `${path}: el proxy cambió la CSP del proyecto`);
-  const originalHtml = await original.text();
-  assert.equal(proxied.title, originalHtml.match(/<title>(.*?)<\/title>/s)?.[1], `${path}: contenido distinto del origen`);
+  const proxied = await page(path);
+  if (compareNetlify) {
+    const original = await get(origin);
+    assert.equal(original.status, 200, `${origin}: origen inaccesible`);
+    assert.equal(proxied.response.headers.get('content-security-policy'), original.headers.get('content-security-policy'), `${path}: el proxy cambió la CSP del proyecto`);
+    const originalHtml = await original.text();
+    assert.equal(proxied.title, originalHtml.match(/<title>(.*?)<\/title>/s)?.[1], `${path}: contenido distinto del origen`);
+  }
   const query = '?ref=production-check&lang=es';
   const bare = new URL(path.slice(0, -1) + query, base);
   const redirect = await get(bare);

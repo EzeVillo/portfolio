@@ -10,6 +10,10 @@
     "test": "node --test scripts/*.test.mjs",
     "routes": "node scripts/sync-routes.mjs",
     "check:live": "node scripts/check-live.mjs",
-    "check": "node --check scripts/serve.mjs && node scripts/sync-routes.mjs --check && node scripts/check.mjs && npm test"
+    "cloudflare:config": "node scripts/cloudflare-config.mjs",
+    "cloudflare:check": "npx --yes wrangler@4.148.0 deploy --env \"\" --dry-run --outdir work/cloudflare-build",
+    "cloudflare:deploy": "npx --yes wrangler@4.148.0 deploy --env \"\"",
+    "cloudflare:preview": "npx --yes wrangler@4.148.0 deploy --env preview",
+    "check": "node --check scripts/serve.mjs && node scripts/sync-routes.mjs --check && node scripts/cloudflare-config.mjs --check && node scripts/check.mjs && npm test"
   }
 }

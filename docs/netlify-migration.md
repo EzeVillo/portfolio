@@ -1,5 +1,8 @@
 # Migración del dominio de IBIT al portfolio
 
+Esta guía conserva la migración histórica y el respaldo en Netlify. Para la
+configuración preparada en Cloudflare, ver [cloudflare-migration.md](cloudflare-migration.md).
+
 ## Estado actual: publicado el 15 de octubre de 2026
 
 - Repositorio: `https://github.com/EzeVillo/portfolio`, rama `main`.
