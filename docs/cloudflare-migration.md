@@ -1,99 +1,66 @@
-# Publicación en Cloudflare conservando ezevillo.com
+# Publicación por subdominios
 
-Preparación local del 29 de octubre de 2026. La configuración no acredita un
-despliegue: los commits, secretos de Actions, DNS y activación se coordinan aparte.
+Configuración preparada el 2 de noviembre de 2026. Por decisión de Ezequiel, los
+proyectos no tienen usuarios y se abandona la compatibilidad con las URLs viejas:
+no se mantienen proxies, redirects de migración ni despliegues de respaldo.
 
-## Servicios y rutas
-
-| Repositorio | Worker | Assets | Entrada pública | Path en el servicio |
+| Proyecto | Rama | Custom Domain | Worker | Assets |
 | --- | --- | --- | --- | --- |
-| portfolio (`main`) | ezevillo-portfolio | public/ | / | / |
-| ibit-to-btc (`main`) | ezevillo-ibit-to-btc | dist/ | /ibit-to-btc/ y ar/ | conserva el prefijo |
-| git-review-workflow (`main`) | ezevillo-git-review-workflow | docs/ | /git-review-workflow/ | quita el prefijo |
-| fe-truco-to-three (`master`) | ezevillo-truco-a-3 | dist/cloudflare/ | /truco-a-3/ | quita el prefijo |
+| Portfolio | main | ezevillo.com | ezevillo-portfolio | public/ |
+| IBIT | main | ibit.ezevillo.com | ezevillo-ibit-to-btc | dist/ |
+| Git Review | main, tags landing-v* | git-review.ezevillo.com | ezevillo-git-review-workflow | docs/ |
+| Truco | master | truco.ezevillo.com | ezevillo-truco-a-3 | dist/cloudflare/ |
 
-`config/routes.mjs` declara los bindings internos del hub. No hay llamadas a
-Netlify en el Worker. El hub conserva parámetros, barras finales, CSP y caché del
-proyecto y repone el prefijo en los redirects de los servicios hijos. La API de
-cotizaciones y la API/WebSocket de Truco siguen usando sus gateways actuales de
-Cloudflare; la API Java continúa en Render.
+Los cuatro Workers sirven sus archivos directamente. El portfolio sólo contiene
+enlaces a los proyectos; las subrutas viejas no se atienden. IBIT en español vive
+en `https://ibit.ezevillo.com/ar/`. Truco instala su PWA en la raíz de su subdominio.
+Cada `robots.txt` anuncia únicamente el sitemap de su propio host.
 
-Las visitas a assets propios del hub se sirven directamente. Las peticiones que
-pasan por su código para llegar a otro servicio sí consumen el cupo de Workers
-(100.000 solicitudes/día por cuenta en Free, compartido con otros Workers).
-No configurar Workers Builds además de Actions: duplicaría publicaciones.
+## Pendiente fuera de los repositorios
 
-## Preparación y publicación, cuando se decida activar
+1. Subir juntos los commits preparados y el trabajo de producción del backend que
+   ya se integró en su `master`. Revisar también los commits locales anteriores
+   de Git Review e IBIT. No se hizo push durante la preparación.
+   El checkout local del backend en `master` es `../api-truco-to-three-production`;
+   el otro checkout conserva su revisión de código independiente.
+2. Usar la cuenta Cloudflare que contiene los gateways y KV actuales. Importar la
+   zona `ezevillo.com` conservando registros ajenos al hosting (correo, TXT, etc.)
+   y apuntar sus nameservers desde DonWeb. El registro del dominio puede seguir
+   en DonWeb. Retirar los registros de hosting de Netlify que ocupen esos hosts
+   y activar Always Use HTTPS en la zona.
+3. Configurar `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en los cuatro repos
+   de frontend. El token necesita Workers Scripts: Edit; al crear los Custom
+   Domains también necesita los permisos de zona necesarios para administrarlos.
+   `wrangler.jsonc` declara cada dominio: un deploy real lo asocia a su Worker y
+   Cloudflare administra su certificado. No crear un hub de rutas adicional.
+4. Publicar cada frontend con su workflow o comando de deploy. Git Review mantiene
+   su publicación por tag `landing-vX.Y.Z`, independiente de CLI y clientes.
+5. Desplegar el gateway de IBIT: cambian su origen permitido a
+   `https://ibit.ezevillo.com` y su endpoint a `/api/rates`. Los datos, KV y Durable
+   Object se conservan. Seguir `../ibit-to-btc/docs/cloudflare-migration.md` para
+   cargar Finnhub y activar un único cron de actualización.
+6. Desplegar el gateway de Truco y el backend de producción. En Render, configurar
+   `TRUCO_ALLOWED_ORIGINS=https://truco.ezevillo.com,https://localhost,capacitor://localhost`:
+   el valor externo prevalece sobre el YAML. La misma lista se declara en el
+   gateway. Conservar sus secretos, la URL del backend y los orígenes nativos.
+7. Verificar en Umami que la propiedad compartida acepta los nuevos hosts. El
+   código de Git Review e IBIT ya limita sus trackers a sus respectivos
+   subdominios, conservando website ID y etiqueta de proyecto.
+8. Verificar certificados y ejecutar `npm run check:live` desde el portfolio.
+   Comprobar además cotizaciones reales, login, WebSocket y PWA de Truco.
+   Las pruebas locales usan proveedores simulados y no acreditan disponibilidad
+   ni consumo de CPU del cron con los proveedores reales en Cloudflare Free.
+9. Desactivar los sitios, builds y cron anteriores de Netlify. No se prepara una
+   vuelta atrás ni se necesitan redirects desde las URLs anteriores.
 
-1. Usar la **misma cuenta Cloudflare** que los gateways existentes. Los cuatro
-   Workers y los service bindings deben pertenecer a ella. El dominio puede
-   continuar registrado en DonWeb; para usar Cloudflare como DNS hay que importar
-   todos los registros, incluidos correo/TXT, y cambiar los nameservers en DonWeb.
-   Guardar antes los registros de Netlify para poder recuperarlos.
-2. En cada repositorio, configurar los secretos de GitHub Actions
-   `CLOUDFLARE_API_TOKEN` (Workers Scripts: Edit en esa cuenta) y
-   `CLOUDFLARE_ACCOUNT_ID`. Para publicar el refresco de IBIT también se necesita
-   acceso de lectura a KV para resolver el binding; no hace falta una clave REST
-   de escritura de KV en el Worker, porque usa su binding nativo.
-3. Detener los builds automáticos de Netlify sin borrar sus sitios ni su
-   configuración. Se mantienen como respaldo hasta verificar el dominio nuevo.
-4. Publicar primero los tres servicios hijos: IBIT desde `main`, Truco desde
-   `master` y Git Review desde un tag `landing-vX.Y.Z` cuyo commit incluya esta
-   migración. Los workflows de cada repo verifican antes de desplegar. Para la
-   primera publicación también se puede ejecutar Wrangler localmente después
-   de construir cada proyecto; no se necesita cambiar el dominio todavía.
-5. Publicar el preview del portfolio después de los hijos con
-   `npm run cloudflare:preview`. Comprobar sus rutas en
-   `https://ezevillo-portfolio-preview.<subdominio-cuenta>.workers.dev`. Después,
-   publicar el Worker de producción con `npm run cloudflare:deploy` o su workflow.
-   `wrangler.jsonc` **no adjunta el dominio automáticamente**. Producción omite
-   `routes` y usa `workers_dev: false` para conservar las asociaciones del dashboard
-   en despliegues siguientes; el preview tiene un nombre y configuración separados.
-6. En el Worker `ezevillo-portfolio`, agregar `ezevillo.com` como **Custom Domain**.
-   Esta asociación se administra en el dashboard y no se declara en Wrangler.
-   Configurar en la zona una Redirect Rule de `www.ezevillo.com` a
-   `https://ezevillo.com` con 301, preservando path y query, y activar **Always Use
-   HTTPS**. `www` necesita un registro DNS proxificado. No asignar el dominio a
-   los servicios hijos. Comprobar certificados antes de dar el cambio por listo.
-7. Verificar home, IBIT en ambos idiomas, guías de Git Review, rutas profundas y
-   PWA de Truco, imágenes/JS/CSS, sitemaps y parámetros. El origen CORS sigue
-   siendo `https://ezevillo.com`; no agregar orígenes de preview al backend.
-8. Coordinar por separado el cron de IBIT según su `docs/cloudflare-migration.md`.
-   Mantener un único programador activo. Conservar el gateway y el namespace KV.
+## Verificación local
 
-## Comprobaciones locales
+Portfolio: `npm run check` y `npm run cloudflare:check`.
+IBIT: `npm test`, `npm run build:cloudflare`, `npm run gateway:test`,
+`npm run cloudflare:check` y `npm run refresh:test`.
+Truco: `pnpm lint`, `pnpm test --watch=false`, `pnpm test:hosting`,
+`pnpm run build:cloudflare` y `pnpm run cloudflare:check`.
+Git Review: checker de logo y landing, tests Bats en Docker y dry run de Wrangler.
+Backend: tests de gateway HTTP/WebSocket y tests Java de producción/ingreso.
 
-```powershell
-# portfolio
-npm run check
-npm run cloudflare:check
-# ../ibit-to-btc
-npm test
-npm run build:cloudflare
-npm run gateway:test
-npm run cloudflare:check
-npm run refresh:test
-# ../fe-truco-to-three
-pnpm lint
-pnpm test --watch=false
-pnpm test:hosting
-pnpm run build:cloudflare
-pnpm run cloudflare:check
-# ../git-review-workflow (los tests Bats se ejecutan en Docker)
-node scripts/check-logo-assets.mjs
-node scripts/check-landing.mjs
-npx --yes wrangler@4.148.0 deploy --dry-run --outdir dist/landing-worker
-```
-
-Los `--dry-run` validan y empaquetan localmente: no publican, no cambian DNS y no
-activan cron. Para una prueba HTTP del destino, `npm run check:live -- <origen>`
-comprueba las rutas del hub. La comparación con los antiguos orígenes de Netlify
-es opcional (`--compare-netlify`), porque sus versiones pueden diferir.
-
-## Recuperación
-
-Desasociar el Custom Domain de Cloudflare y restaurar los registros guardados de
-Netlify. Las configuraciones originales de los cuatro sitios siguen versionadas;
-no eliminarlas hasta verificar la migración. Si también se cambió el programador
-de IBIT, desactivar primero el cron de Cloudflare y recién después restaurar el
-de Netlify. Evitar dos tareas consultando simultáneamente a los proveedores.
+Los dry runs no publican, no cambian DNS y no activan el cron.

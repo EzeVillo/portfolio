@@ -1,13 +1,11 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
-import { projects } from '../config/routes.mjs';
+import { siteURL } from '../config/sites.mjs';
 
 const config = JSON.parse(await readFile(new URL('../wrangler.jsonc', import.meta.url), 'utf8'));
-assert.deepEqual(config.services, projects.map(({ binding, service }) => ({ binding, service })), 'Los bindings deben coincidir con config/routes.mjs');
-assert.deepEqual(config.env.preview.services, config.services, 'El preview debe usar los mismos servicios');
-assert.equal(config.workers_dev, false, 'El dominio de producción se administra desde el dashboard');
-assert.ok(!('routes' in config), 'Las rutas de producción se administran desde el dashboard');
+assert.ok(!config.main && !config.services, 'El portfolio sólo sirve sus archivos estáticos');
+assert.deepEqual(config.routes, [{ pattern: new URL(siteURL).hostname, custom_domain: true }]);
 const html = await readFile(new URL('../public/index.html', import.meta.url), 'utf8');
 const jsonLd = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1];
 const hash = createHash('sha256').update(jsonLd.replaceAll('\r\n', '\n')).digest('base64');
@@ -17,4 +15,4 @@ const path = new URL('../public/_headers', import.meta.url);
 if (process.argv.includes('--check')) {
   assert.equal((await readFile(path, 'utf8')).replaceAll('\r\n', '\n'), headers, 'Ejecutar npm run cloudflare:config');
 } else await writeFile(path, headers);
-console.log('OK: bindings y cabeceras de Cloudflare.');
+console.log('OK: dominio y cabeceras de Cloudflare.');
