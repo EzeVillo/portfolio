@@ -1,6 +1,6 @@
 # Publicación por subdominios
 
-Configuración preparada el 2 de noviembre de 2026. Por decisión de Ezequiel, los
+Estado comprobado el 3 de noviembre de 2026. Por decisión de Ezequiel, los
 proyectos no tienen usuarios y se abandona la compatibilidad con las URLs viejas:
 no se mantienen proxies, redirects de migración ni despliegues de respaldo.
 
@@ -16,42 +16,51 @@ enlaces a los proyectos; las subrutas viejas no se atienden. IBIT en español vi
 en `https://ibit.ezevillo.com/ar/`. Truco instala su PWA en la raíz de su subdominio.
 Cada `robots.txt` anuncia únicamente el sitemap de su propio host.
 
+## Estado publicado
+
+Los cinco repositorios se subieron a sus ramas principales y los cuatro frontends
+se publicaron correctamente. Git Review se publicó con `landing-v0.1.0`; sus
+releases de CLI y clientes se gestionan aparte.
+
+La zona DNS está activa en Cloudflare, con Always Use HTTPS. DonWeb conserva el
+registro del dominio. Se retiró el A del dominio raíz que apuntaba al hosting
+anterior; los cuatro hosts están asociados a sus Workers. Se conservaron el
+CNAME de `www` y el TXT de verificación de Google.
+
+El usuario cargó los secretos de Actions en los cuatro repositorios. Ambos
+gateways se actualizaron conservando secretos y almacenamiento. IBIT respondió
+para ambos mercados y pasó la comprobación de vigencia. Se verificó el transporte
+REST/SockJS/WebSocket de Truco con el nuevo origen, sin iniciar sesión; su estado
+operativo se documenta en `docs/PRODUCCION.md` del repositorio backend.
+
+`npm run check:live` comprobó 51 solicitudes de páginas, assets, robots y sitemaps.
+Los builds de los cuatro sitios antiguos en Netlify están detenidos; sus sitios
+y el programador de IBIT todavía no se eliminaron.
+
+## Publicaciones siguientes
+
+Los workflows del portfolio e IBIT publican desde `main`; Truco, desde `master`.
+Git Review publica sólo con tags `landing-vX.Y.Z`, independientes de CLI/clientes.
+Conservar `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en Actions, con permisos
+para Workers y sus Custom Domains. `wrangler.jsonc` administra la asociación y
+Cloudflare, los certificados. El portfolio sólo publica sus assets.
+
+Los gateways se publican por separado según las guías de cada repositorio. El
+refresco de IBIT sólo se publica cuando se solicita explícitamente; un push
+común no activa ni actualiza su cron.
+
 ## Pendiente fuera de los repositorios
 
-1. Subir juntos los commits preparados y el trabajo de producción del backend que
-   ya se integró en su `master`. Revisar también los commits locales anteriores
-   de Git Review e IBIT. No se hizo push durante la preparación.
-   El checkout local del backend en `master` es `../api-truco-to-three-production`;
-   el otro checkout conserva su revisión de código independiente.
-2. Usar la cuenta Cloudflare que contiene los gateways y KV actuales. Importar la
-   zona `ezevillo.com` conservando registros ajenos al hosting (correo, TXT, etc.)
-   y apuntar sus nameservers desde DonWeb. El registro del dominio puede seguir
-   en DonWeb. Retirar los registros de hosting de Netlify que ocupen esos hosts
-   y activar Always Use HTTPS en la zona.
-3. Configurar `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en los cuatro repos
-   de frontend. El token necesita Workers Scripts: Edit; al crear los Custom
-   Domains también necesita los permisos de zona necesarios para administrarlos.
-   `wrangler.jsonc` declara cada dominio: un deploy real lo asocia a su Worker y
-   Cloudflare administra su certificado. No crear un hub de rutas adicional.
-4. Publicar cada frontend con su workflow o comando de deploy. Git Review mantiene
-   su publicación por tag `landing-vX.Y.Z`, independiente de CLI y clientes.
-5. Desplegar el gateway de IBIT: cambian su origen permitido a
-   `https://ibit.ezevillo.com` y su endpoint a `/api/rates`. Los datos, KV y Durable
-   Object se conservan. Seguir `../ibit-to-btc/docs/cloudflare-migration.md` para
-   cargar Finnhub y activar un único cron de actualización.
-6. Desplegar el gateway de Truco y el backend de producción. En Render, configurar
-   `TRUCO_ALLOWED_ORIGINS=https://truco.ezevillo.com,https://localhost,capacitor://localhost`:
-   el valor externo prevalece sobre el YAML. La misma lista se declara en el
-   gateway. Conservar sus secretos, la URL del backend y los orígenes nativos.
-7. Verificar en Umami que la propiedad compartida acepta los nuevos hosts. El
+1. Cargar Finnhub en el Worker privado y trasladar el cron de IBIT según
+   `../ibit-to-btc/docs/cloudflare-migration.md`, sin dejar dos programadores.
+   Detener los builds de Netlify no demuestra que su cron esté desactivado.
+2. Verificar en Umami que la propiedad compartida acepta los nuevos hosts. El
    código de Git Review e IBIT ya limita sus trackers a sus respectivos
    subdominios, conservando website ID y etiqueta de proyecto.
-8. Verificar certificados y ejecutar `npm run check:live` desde el portfolio.
-   Comprobar además cotizaciones reales, login, WebSocket y PWA de Truco.
-   Las pruebas locales usan proveedores simulados y no acreditan disponibilidad
-   ni consumo de CPU del cron con los proveedores reales en Cloudflare Free.
-9. Desactivar los sitios, builds y cron anteriores de Netlify. No se prepara una
-   vuelta atrás ni se necesitan redirects desde las URLs anteriores.
+3. Completar la comprobación autenticada de Truco: login, invitaciones, eventos de
+   partida y PWA. La apertura WebSocket sin sesión no prueba esos flujos.
+4. Retirar los sitios antiguos de Netlify después de trasladar el cron. No se
+   necesitan redirects desde las URLs anteriores.
 
 ## Verificación local
 
