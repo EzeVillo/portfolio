@@ -34,8 +34,11 @@ REST/SockJS/WebSocket de Truco con el nuevo origen, sin iniciar sesión; su esta
 operativo se documenta en `docs/PRODUCCION.md` del repositorio backend.
 
 `npm run check:live` comprobó 51 solicitudes de páginas, assets, robots y sitemaps.
-Los builds de los cuatro sitios antiguos en Netlify están detenidos; sus sitios
-y el programador de IBIT todavía no se eliminaron.
+Los builds de los cuatro sitios antiguos en Netlify están detenidos. El proyecto
+anterior de IBIT se desactivó completamente antes de activar su cron privado de
+Cloudflare cada 15 minutos; el usuario cargó Finnhub sin compartir el valor.
+El estado de ejecución se documenta en `../ibit-to-btc/docs/cloudflare-migration.md`.
+Los sitios antiguos todavía no se eliminaron.
 
 ## Publicaciones siguientes
 
@@ -51,15 +54,12 @@ común no activa ni actualiza su cron.
 
 ## Pendiente fuera de los repositorios
 
-1. Cargar Finnhub en el Worker privado y trasladar el cron de IBIT según
-   `../ibit-to-btc/docs/cloudflare-migration.md`, sin dejar dos programadores.
-   Detener los builds de Netlify no demuestra que su cron esté desactivado.
-2. Verificar en Umami que la propiedad compartida acepta los nuevos hosts. El
+1. Verificar en Umami que la propiedad compartida acepta los nuevos hosts. El
    código de Git Review e IBIT ya limita sus trackers a sus respectivos
    subdominios, conservando website ID y etiqueta de proyecto.
-3. Completar la comprobación autenticada de Truco: login, invitaciones, eventos de
+2. Completar la comprobación autenticada de Truco: login, invitaciones, eventos de
    partida y PWA. La apertura WebSocket sin sesión no prueba esos flujos.
-4. Retirar los sitios antiguos de Netlify después de trasladar el cron. No se
+3. Retirar los sitios antiguos de Netlify después de comprobar el cron nuevo. No se
    necesitan redirects desde las URLs anteriores.
 
 ## Verificación local
