@@ -17,7 +17,9 @@ URLs anteriores. Los enlaces de los proyectos se verifican contra `config/sites.
 
 La portada social está en `public/assets/og-portfolio.png` (1200 × 630), con fuente
 editable en `design/og.html`. Capturar ese HTML a 1200 × 630 después de cargar las
-fuentes para regenerarla.
+fuentes para regenerarla. La frase y el dominio quedan dentro de los 630 × 630
+centrales para admitir miniaturas cuadradas. Al cambiar el PNG, actualizar la
+versión de su URL en `og:image` y `twitter:image` para renovar las cachés sociales.
 
 `npm run cloudflare:config` genera `public/_headers` con la CSP y su hash JSON-LD.
 `wrangler.jsonc` declara el Custom Domain de producción y un preview independiente.

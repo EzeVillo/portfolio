@@ -21,6 +21,7 @@ Revisión de enlaces: 3 de noviembre de 2026. Las fuentes editoriales conservan 
 | LG V480: captura del panel nativo | Captura directa por ADB de la LG V480 conectada por el usuario; imagen completa de 1280 × 800, sin modificar, en public/assets/lg-v480-bitcoin-node.png |
 | LG V480: modelo de 2014, 1 GB de RAM, microSD de 32 GB y LineageOS 14.1 | Datos proporcionados por el usuario; capacidad de microSD y versión de LineageOS contrastadas con README.md de ../lg-v480-bitcoin-node. Bitcoin Core se presenta sin fijar versión por indicación del usuario |
 | Posicionamiento como desarrollador de software; experiencia backend y bancaria en «Sobre mí» | Ajuste editorial aprobado por el usuario en esta conversación |
+| Frase principal «Pensar, diseñar y construir software.» y referencia visual de nodos conectados | Frase e imagen proporcionadas por el usuario el 6 de noviembre de 2026; aplicadas a la portada y al OG |
 | Foco actual: aprender, aplicar y enseñar cómo usar IA | Actividad descrita por el usuario y redacción aprobada en esta conversación |
 | Lectura breve de proyectos, foco en software y enlace de IA aplicada a Git Review | Ajuste solicitado por el usuario el 15 de octubre de 2026; capacidades resumidas a partir de las fuentes anteriores. El recorrido generado por un agente está descrito en README.es.md de ../git-review-workflow |
 | Eliminación de «Cómo trabajo» | Ajuste editorial aprobado por el usuario en esta conversación |

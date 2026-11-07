@@ -2,29 +2,33 @@
 <html lang="es-AR">
 <meta charset="utf-8">
 <title>Portada social · ezevillo</title>
-<!-- Exportar el viewport de 1200 × 630 como public/assets/og-portfolio.png una vez cargadas las fuentes. -->
+<!-- Exportar a 1200 × 630 después de cargar las fuentes.
+     El contenido esencial queda dentro del recorte central de 630 × 630 (x: 285–915).
+     Destino: public/assets/og-portfolio.png. Al cambiarlo, versionar su URL en index.html. -->
 <style>
 @font-face{font-family:Space;src:url('../public/assets/space-grotesk-latin.woff2');font-weight:300 700}
 @font-face{font-family:Manrope;src:url('../public/assets/manrope-latin.woff2');font-weight:200 800}
-@font-face{font-family:Mono;src:url('../public/assets/ibm-plex-mono-latin.woff2')}
-*{box-sizing:border-box}html,body{width:1200px;height:630px;margin:0;overflow:hidden}
-body{background:#f5f7fc;color:#192a43;font-family:Manrope,sans-serif;padding:48px 64px}
-header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dce3ef;padding-bottom:26px}
-.brand{font-family:Space,sans-serif;font-size:42px;font-weight:700;letter-spacing:-2.5px}.dot{color:#3155df}
-.role{font-family:Mono,monospace;font-size:17px;color:#56657c}
-main{padding-top:40px;display:flex;align-items:center;justify-content:space-between;gap:38px}
-h1{margin:0;font-family:Space,sans-serif;font-size:82px;font-weight:600;line-height:1.04;letter-spacing:-5px}
-h1 span{color:#3155df}
-.signature{width:285px;border-left:3px solid #3155df;padding:4px 0 4px 25px}
-.name{margin:0;font-family:Space,sans-serif;font-size:31px;font-weight:600;line-height:1.22;letter-spacing:-1px}
-.description{margin:17px 0 0;font-size:18px;line-height:1.6;color:#56657c}
-footer{position:absolute;left:64px;right:64px;bottom:43px;display:flex;align-items:center;justify-content:space-between;font-family:Mono,monospace;font-size:17px;color:#56657c}
-.braces{font-size:25px;color:#3155df;letter-spacing:-3px}
+*{box-sizing:border-box}
+html,body{width:1200px;height:630px;margin:0;overflow:hidden}
+body{display:grid;place-items:center;background:#f5f7fc;color:#192a43;font-family:Manrope,sans-serif}
+main{width:570px;text-align:center}
+.diagram{display:block;width:200px;height:100px;margin:0 auto 28px;color:#b9b9ee}
+h1{margin:0;font-family:Space,sans-serif;font-size:76px;font-weight:700;line-height:1.05;letter-spacing:-4.4px}
+.highlight{color:#3155df}
+.domain{margin:34px 0 0;font-family:Space,sans-serif;font-size:34px;font-weight:700;letter-spacing:-1.3px}
 </style>
-<header><div class="brand">ezevillo<span class="dot">.</span></div><div class="role">Desarrollador de software</div></header>
 <main>
-  <h1>De una idea<br>a algo que<br><span>podés usar.</span></h1>
-  <div class="signature"><p class="name">Ezequiel<br>Villordo</p><p class="description">Herramientas y<br>productos propios.</p></div>
+  <svg class="diagram" viewBox="0 0 200 100" fill="none" aria-hidden="true">
+    <g stroke="currentColor" stroke-width="1.8">
+      <path d="M40 26h35m36 0h49m-24 0v45q0 10 10 10h14"/>
+      <rect x="4" y="8" width="36" height="36" rx="9"/>
+      <rect x="75" y="8" width="36" height="36" rx="9"/>
+      <rect x="160" y="8" width="36" height="36" rx="9"/>
+      <rect x="160" y="62" width="36" height="36" rx="9"/>
+    </g>
+    <rect x="132" y="22" width="8" height="8" rx="1.5" fill="#3155df"/>
+  </svg>
+  <h1>Pensar, diseñar<br>y <span class="highlight">construir<br>software.</span></h1>
+  <p class="domain">ezevillo.com</p>
 </main>
-<footer><span>ezevillo.com</span><span class="braces" aria-hidden="true">{ }</span></footer>
 </html>
