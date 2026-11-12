@@ -12,6 +12,10 @@ async function page(url) {
   assert.equal(response.status, 200, `${url}: HTTP ${response.status}`);
   const html = await response.text();
   assert.match(html, /<title>[^<]+<\/title>/, `${url}: falta el título`);
+  const canonical = html.match(/<link\b[^>]*\brel="canonical"[^>]*>/i)?.[0]
+    .match(/\bhref="([^"]+)"/i)?.[1];
+  assert.equal(canonical, url, `${url}: URL canónica`);
+  assert.doesNotMatch(response.headers.get('x-robots-tag') ?? '', /\bnoindex\b/i);
   const origin = new URL(url).origin;
   const base = new URL(html.match(/<base\b[^>]*href="([^"]+)"/)?.[1] || url, url);
   const assets = new Set([...html.matchAll(/\b(?:src|href)="([^"#]+)"/g)]
@@ -27,17 +31,20 @@ async function page(url) {
   console.log(`OK ${url}: ${assets.size} assets`);
 }
 for (const site of [{ url: `${siteURL}/`, pages: [] }, ...projects]) {
-  await Promise.all(['', ...site.pages].map(path => page(new URL(path, site.url).href)));
+  const pages = ['', ...site.pages].map(path => new URL(path, site.url).href);
+  await Promise.all(pages.map(page));
   const robots = await get(new URL('/robots.txt', site.url));
   assert.equal(robots.status, 200, `${site.url}: robots.txt`);
   const sitemaps = [...(await robots.text()).matchAll(/^Sitemap:\s*(\S+)/gm)].map(match => new URL(match[1]));
   assert.ok(sitemaps.length, `${site.url}: falta sitemap`);
+  const locations = [];
   for (const sitemap of sitemaps) {
     assert.equal(sitemap.origin, new URL(site.url).origin);
     const response = await get(sitemap);
     assert.equal(response.status, 200, sitemap.href);
-    assert.ok((await response.text()).includes(site.url));
+    locations.push(...Array.from((await response.text()).matchAll(/<loc>([^<]+)<\/loc>/g), match => match[1]));
   }
+  assert.deepEqual(locations.sort(), pages.sort(), `${site.url}: URLs del sitemap`);
 }
 const redirects = await readFile(new URL('../public/_redirects', import.meta.url), 'utf8');
 await Promise.all(redirects.split(/\r?\n/).filter(line => line && !line.startsWith('#')).map(async line => {
@@ -47,4 +54,13 @@ await Promise.all(redirects.split(/\r?\n/).filter(line => line && !line.startsWi
   assert.equal(response.status, Number(status), `${url}: estado de la redirección`);
   assert.equal(response.headers.get('location'), destination, `${url}: destino de la redirección`);
 }));
+
+for (const protocol of ['http:', 'https:']) {
+  const alias = new URL('/robots.txt?check=www', siteURL);
+  alias.hostname = `www.${alias.hostname}`;
+  alias.protocol = protocol;
+  const response = await get(alias);
+  assert.equal(response.status, 301, `${alias}: estado de la redirección`);
+  assert.equal(response.headers.get('location'), `${siteURL}/robots.txt?check=www`);
+}
 console.log(`OK: ${checked} solicitudes en los cuatro dominios.`);

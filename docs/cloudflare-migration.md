@@ -1,8 +1,8 @@
 # Publicación por subdominios
 
-Estado comprobado el 3 de noviembre de 2026. Por decisión de Ezequiel, los
-proyectos no tienen usuarios y se abandona la compatibilidad con las URLs viejas:
-no se mantienen proxies, redirects de migración ni despliegues de respaldo.
+La migración del 3 de noviembre de 2026 separó los proyectos en subdominios.
+El 12 de noviembre se añadieron redirecciones permanentes para recuperar enlaces
+a las antiguas páginas públicas y conservar sus parámetros de consulta.
 
 | Proyecto | Rama | Custom Domain | Worker | Assets |
 | --- | --- | --- | --- | --- |
@@ -11,8 +11,9 @@ no se mantienen proxies, redirects de migración ni despliegues de respaldo.
 | Git Review | main, tags landing-v* | git-review.ezevillo.com | ezevillo-git-review-workflow | docs/ |
 | Truco | master | truco.ezevillo.com | ezevillo-truco-a-3 | dist/cloudflare/ |
 
-Los cuatro Workers sirven sus archivos directamente. El portfolio sólo contiene
-enlaces a los proyectos; las subrutas viejas no se atienden. IBIT en español vive
+Los cuatro Workers sirven sus archivos directamente. El portfolio usa
+`public/_redirects` para llevar cada página anterior a su equivalente con un
+301. IBIT en español vive
 en `https://ibit.ezevillo.com/ar/`. Truco instala su PWA en la raíz de su subdominio.
 Cada `robots.txt` anuncia únicamente el sitemap de su propio host.
 
@@ -25,7 +26,9 @@ releases de CLI y clientes se gestionan aparte.
 La zona DNS está activa en Cloudflare, con Always Use HTTPS. DonWeb conserva el
 registro del dominio. Se retiró el A del dominio raíz que apuntaba al hosting
 anterior; los cuatro hosts están asociados a sus Workers. Se conservaron el
-CNAME de `www` y el TXT de verificación de Google.
+CNAME de `www` y el TXT de verificación de Google. En Cloudflare, el CNAME
+`www` apunta a `ezevillo.com` con proxy activo. La regla «www a ezevillo.com»
+coincide con el host exacto y envía un 301 a HTTPS conservando ruta y consulta.
 
 El usuario cargó los secretos de Actions en los cuatro repositorios. Ambos
 gateways se actualizaron conservando secretos y almacenamiento. IBIT respondió
@@ -33,7 +36,10 @@ para ambos mercados y pasó la comprobación de vigencia. Se verificó el transp
 REST/SockJS/WebSocket de Truco con el nuevo origen, sin iniciar sesión; su estado
 operativo se documenta en `docs/PRODUCCION.md` del repositorio backend.
 
-`npm run check:live` comprobó 51 solicitudes de páginas, assets, robots y sitemaps.
+`npm run check:live` comprueba páginas, assets, canónicas, sitemaps y redirects.
+Search Console leyó los cuatro sitemaps el 12 de noviembre de 2026. El de Truco
+incluye la portada y las reglas. El acceso y el registro indican `noindex`.
+Umami recibió visitas y eventos de IBIT y Git Review en sus subdominios.
 Los builds de los cuatro sitios antiguos en Netlify están detenidos. El proyecto
 anterior de IBIT se desactivó completamente antes de activar su cron privado de
 Cloudflare cada 15 minutos; el usuario cargó Finnhub sin compartir el valor.
@@ -52,15 +58,12 @@ Los gateways se publican por separado según las guías de cada repositorio. El
 refresco de IBIT sólo se publica cuando se solicita explícitamente; un push
 común no activa ni actualiza su cron.
 
-## Pendiente fuera de los repositorios
+## Pendientes operativos
 
-1. Verificar en Umami que la propiedad compartida acepta los nuevos hosts. El
-   código de Git Review e IBIT ya limita sus trackers a sus respectivos
-   subdominios, conservando website ID y etiqueta de proyecto.
-2. Completar la comprobación autenticada de Truco: login, invitaciones, eventos de
+1. Completar la comprobación autenticada de Truco: login, invitaciones, eventos de
    partida y PWA. La apertura WebSocket sin sesión no prueba esos flujos.
-3. Retirar los sitios antiguos de Netlify después de comprobar el cron nuevo. No se
-   necesitan redirects desde las URLs anteriores.
+2. Retirar las copias antiguas de Netlify cuando se decida el destino de sus
+   dominios propios.
 
 ## Verificación local
 
