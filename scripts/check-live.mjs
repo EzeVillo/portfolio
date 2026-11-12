@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { projects, siteURL } from '../config/sites.mjs';
 
 let checked = 0;
@@ -38,4 +39,12 @@ for (const site of [{ url: `${siteURL}/`, pages: [] }, ...projects]) {
     assert.ok((await response.text()).includes(site.url));
   }
 }
+const redirects = await readFile(new URL('../public/_redirects', import.meta.url), 'utf8');
+await Promise.all(redirects.split(/\r?\n/).filter(line => line && !line.startsWith('#')).map(async line => {
+  const [path, destination, status] = line.split(/\s+/);
+  const url = new URL(path, siteURL);
+  const response = await get(url);
+  assert.equal(response.status, Number(status), `${url}: estado de la redirección`);
+  assert.equal(response.headers.get('location'), destination, `${url}: destino de la redirección`);
+}));
 console.log(`OK: ${checked} solicitudes en los cuatro dominios.`);

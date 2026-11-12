@@ -12,8 +12,9 @@ npm run check:live          # Verificar los cuatro sitios publicados
 ```
 
 `public/` contiene únicamente el portfolio. Cada proyecto tiene su propio
-subdominio, repositorio y Worker de Cloudflare. No hay proxy ni aliases para las
-URLs anteriores. Los enlaces de los proyectos se verifican contra `config/sites.mjs`.
+subdominio, repositorio y Worker de Cloudflare. Las antiguas URLs públicas
+redirigen a su equivalente mediante `public/_redirects`. Los enlaces de los
+proyectos se verifican contra `config/sites.mjs`.
 
 La portada social está en `public/assets/og-portfolio.png` (1200 × 630), con fuente
 editable en `design/og.html`. Capturar ese HTML a 1200 × 630 después de cargar las

@@ -1,0 +1,23 @@
+# URLs públicas anteriores a la migración por subdominios.
+/ibit-to-btc https://ibit.ezevillo.com/ 301
+/ibit-to-btc/ https://ibit.ezevillo.com/ 301
+/ibit-to-btc/index.html https://ibit.ezevillo.com/ 301
+/ibit-to-btc/ar https://ibit.ezevillo.com/ar/ 301
+/ibit-to-btc/ar/ https://ibit.ezevillo.com/ar/ 301
+/ibit-to-btc/ar/index.html https://ibit.ezevillo.com/ar/ 301
+/git-review-workflow https://git-review.ezevillo.com/ 301
+/git-review-workflow/ https://git-review.ezevillo.com/ 301
+/git-review-workflow/index.html https://git-review.ezevillo.com/ 301
+/git-review-workflow/guides/review-pull-requests-locally https://git-review.ezevillo.com/guides/review-pull-requests-locally/ 301
+/git-review-workflow/guides/review-pull-requests-locally/ https://git-review.ezevillo.com/guides/review-pull-requests-locally/ 301
+/git-review-workflow/guides/review-pull-requests-locally/index.html https://git-review.ezevillo.com/guides/review-pull-requests-locally/ 301
+/git-review-workflow/es/guias/revisar-pull-requests-localmente https://git-review.ezevillo.com/es/guias/revisar-pull-requests-localmente/ 301
+/git-review-workflow/es/guias/revisar-pull-requests-localmente/ https://git-review.ezevillo.com/es/guias/revisar-pull-requests-localmente/ 301
+/git-review-workflow/es/guias/revisar-pull-requests-localmente/index.html https://git-review.ezevillo.com/es/guias/revisar-pull-requests-localmente/ 301
+/truco-a-3 https://truco.ezevillo.com/ 301
+/truco-a-3/ https://truco.ezevillo.com/ 301
+/truco-a-3/index.html https://truco.ezevillo.com/ 301
+/truco-a-3/reglas https://truco.ezevillo.com/reglas 301
+/truco-a-3/reglas/ https://truco.ezevillo.com/reglas 301
+/truco-a-3/login https://truco.ezevillo.com/login 301
+/truco-a-3/register https://truco.ezevillo.com/register 301
