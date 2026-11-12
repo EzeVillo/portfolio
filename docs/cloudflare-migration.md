@@ -42,9 +42,10 @@ incluye la portada y las reglas. El acceso y el registro indican `noindex`.
 Umami recibió visitas y eventos de IBIT y Git Review en sus subdominios.
 Los cuatro proyectos de Netlify figuran como `Paused` desde el 12 de noviembre
 de 2026. Sus URLs `netlify.app` devuelven 404. La desactivación conserva la
-configuración de los proyectos. IBIT ya estaba desactivado antes de poner en
-marcha el refresco programado de Cloudflare. El estado de ejecución se
-documenta en `../ibit-to-btc/docs/cloudflare-migration.md`.
+configuración de los proyectos. Se desvincularon `ezevillo.com` y
+`www.ezevillo.com` del portfolio antiguo en Netlify. IBIT ya estaba desactivado
+antes de poner en marcha el refresco programado de Cloudflare. El estado de
+ejecución se documenta en `../ibit-to-btc/docs/cloudflare-migration.md`.
 
 ## Publicaciones siguientes
 
