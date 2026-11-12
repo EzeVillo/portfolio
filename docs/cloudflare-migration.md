@@ -40,11 +40,11 @@ operativo se documenta en `docs/PRODUCCION.md` del repositorio backend.
 Search Console leyó los cuatro sitemaps el 12 de noviembre de 2026. El de Truco
 incluye la portada y las reglas. El acceso y el registro indican `noindex`.
 Umami recibió visitas y eventos de IBIT y Git Review en sus subdominios.
-Los builds de los cuatro sitios antiguos en Netlify están detenidos. El proyecto
-anterior de IBIT se desactivó completamente antes de activar su cron privado de
-Cloudflare cada 15 minutos; el usuario cargó Finnhub sin compartir el valor.
-El estado de ejecución se documenta en `../ibit-to-btc/docs/cloudflare-migration.md`.
-Los sitios antiguos todavía no se eliminaron.
+Los cuatro proyectos de Netlify figuran como `Paused` desde el 12 de noviembre
+de 2026. Sus URLs `netlify.app` devuelven 404. La desactivación conserva la
+configuración de los proyectos. IBIT ya estaba desactivado antes de poner en
+marcha el refresco programado de Cloudflare. El estado de ejecución se
+documenta en `../ibit-to-btc/docs/cloudflare-migration.md`.
 
 ## Publicaciones siguientes
 
@@ -60,10 +60,8 @@ común no activa ni actualiza su cron.
 
 ## Pendientes operativos
 
-1. Completar la comprobación autenticada de Truco: login, invitaciones, eventos de
-   partida y PWA. La apertura WebSocket sin sesión no prueba esos flujos.
-2. Retirar las copias antiguas de Netlify cuando se decida el destino de sus
-   dominios propios.
+Completar la comprobación autenticada de Truco con login, invitaciones, eventos
+de partida y PWA. Hasta ahora se verificó la apertura WebSocket sin sesión.
 
 ## Verificación local
 
